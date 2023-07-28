@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import model.Floor;
 import model.Room;
 
 /**
@@ -25,85 +26,139 @@ public class ClientView extends javax.swing.JFrame {
      */
     private Room room;
 
+    private Floor floor;
+
     public ClientView() {
         initComponents();
         setLocationRelativeTo(this);
         setResizable(false);
         roomForm.setLocationRelativeTo(this);
         roomForm.setResizable(false);
-        
+
         room = new Room();
+        floor = new Floor();
     }
-    
+
     public void addActionListener(ActionListener actionListener) {
-        
+
         roomSearch.addActionListener(actionListener);
         roomCreate.addActionListener(actionListener);
         roomDelete.addActionListener(actionListener);
         roomUpdate.addActionListener(actionListener);
         applyRoomBtn.addActionListener(actionListener);
-        
+
+        floorSearch.addActionListener(actionListener);
+        floorCreate.addActionListener(actionListener);
+        floorDelete.addActionListener(actionListener);
+        floorUpdate.addActionListener(actionListener);
+        applyFloorbtn.addActionListener(actionListener);
+
     }
-    
-    public void addItems(List<Integer> floors){
-        for(Integer i : floors){
+
+    public void addItems(List<Integer> floors) {
+        for (Integer i : floors) {
             floorId.addItem(i);
         }
     }
-    
+
     public Room getRoom() throws NumberFormatException, EmptyStringException {
         int floor = (int) floorId.getSelectedItem();
-        
+
         if (roomArea.getText().equals("") || roomName.getText().equals("") || roomPopulation.getText().equals("")) {
             throw new EmptyStringException("Hãy nhập đủ các trường");
         }
         String name = roomName.getText();
-        
+
         float area = Float.parseFloat(roomArea.getText().toString());
-        
+
         int population = Integer.parseInt(roomPopulation.getText().toString());
-        
+
         room.setName(name);
         room.setFloorId(floor);
         room.setArea(area);
         room.setPopulationOfRoom(population);
         room.setId(Integer.parseInt(roomId.getText().toString()));
-        
+
         return room;
     }
-    
-    public int getRoomId() throws NumberFormatException, EmptyStringException{
-        if(roomId.getText().equals(""))
+
+    public Floor getFloor() throws NumberFormatException, EmptyStringException {
+
+        if (floorName.getText().equals("") || floorDecrip.getText().equals("")) {
+            throw new EmptyStringException("Hãy nhập đủ các trường");
+        }
+        String name = floorName.getText();
+
+        String decription = roomPopulation.getText().toString();
+
+        floor.setName(name);
+        floor.setDecription(decription);
+
+        return floor;
+    }
+
+    public int getRoomId() throws NumberFormatException, EmptyStringException {
+        if (roomId.getText().equals("")) {
             throw new EmptyStringException("Nhập trường ID!!!");
-        
+        }
+
         int id = Integer.parseInt(roomId.getText().toString());
-        
+
         return id;
     }
-    
-    public void setRoomForm(Room room){
+
+    public int getFloorId() throws NumberFormatException, EmptyStringException {
+        if (floorIdtf.getText().equals("")) {
+            throw new EmptyStringException("Nhập trường ID!!!");
+        }
+
+        int id = Integer.parseInt(floorIdtf.getText().toString());
+
+        return id;
+    }
+
+    public void setRoomForm(Room room) {
         roomName.setText(room.getName());
-        roomArea.setText(room.getArea()+"");
-        roomPopulation.setText(room.getPopulationOfRoom()+"");
+        roomArea.setText(room.getArea() + "");
+        roomPopulation.setText(room.getPopulationOfRoom() + "");
         floorId.setSelectedItem(room.getFloorId());
         floorId.setEnabled(false);
     }
-    
-    public void showRoomInfo(Room room){
-        floorLb.setText("Floor : "+room.getFloorId());
-        nameLb.setText("Name : "+room.getName());
-        areaLb.setText("Area : "+room.getArea());
-        populationLb.setText("Population : "+room.getPopulationOfRoom());
-        
+
+    public void setFloorForm(Floor floor) {
+        floorName.setText(floor.getName());
+        floorDecrip.setText(floor.getDecription());
+
     }
-    public void clearRoomInfo(){
+
+    public void showRoomInfo(Room room) {
+        floorLb.setText("Floor : " + room.getFloorId());
+        nameLb.setText("Name : " + room.getName());
+        areaLb.setText("Area : " + room.getArea());
+        populationLb.setText("Population : " + room.getPopulationOfRoom());
+
+    }
+
+    public void clearRoomInfo() {
         floorLb.setText("");
         nameLb.setText("");
         areaLb.setText("");
         populationLb.setText("");
-        
+
     }
-    
+
+    public void showFloorInfo(Floor floor) {
+        nameFloorlb.setText("Name : " + room.getFloorId());
+        decriptionlb.setText("Decription : " + floor.getDecription());
+
+    }
+
+    public void clearFloorInfo() {
+        nameFloorlb.setText("");
+        decriptionlb.setText("");
+
+    }
+
     public void showMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
     }
@@ -111,8 +166,6 @@ public class ClientView extends javax.swing.JFrame {
     public JButton getApplyRoomBtn() {
         return applyRoomBtn;
     }
-
-   
 
     public JDialog getFloorForm() {
         return floorForm;
@@ -137,7 +190,26 @@ public class ClientView extends javax.swing.JFrame {
     public JButton getRoomUpdate() {
         return roomUpdate;
     }
-    
+
+    public JButton getApplyFloorbtn() {
+        return applyFloorbtn;
+    }
+
+    public JButton getFloorCreate() {
+        return floorCreate;
+    }
+
+    public JButton getFloorDelete() {
+        return floorDelete;
+    }
+
+    public JButton getFloorSearch() {
+        return floorSearch;
+    }
+
+    public JButton getFloorUpdate() {
+        return floorUpdate;
+    }
     
     
 
@@ -167,8 +239,18 @@ public class ClientView extends javax.swing.JFrame {
         floorName = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         floorDecrip = new javax.swing.JTextField();
-        addFloorbtn = new javax.swing.JButton();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        applyFloorbtn = new javax.swing.JButton();
+        tab = new javax.swing.JTabbedPane();
+        jPanel7 = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
+        nameFloorlb = new javax.swing.JLabel();
+        decriptionlb = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        floorIdtf = new javax.swing.JTextField();
+        floorSearch = new javax.swing.JButton();
+        floorUpdate = new javax.swing.JButton();
+        floorCreate = new javax.swing.JButton();
+        floorDelete = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         floorLb = new javax.swing.JLabel();
@@ -182,7 +264,6 @@ public class ClientView extends javax.swing.JFrame {
         roomCreate = new javax.swing.JButton();
         roomDelete = new javax.swing.JButton();
 
-        roomForm.setPreferredSize(new java.awt.Dimension(465, 400));
         roomForm.setResizable(false);
         roomForm.setSize(new java.awt.Dimension(480, 400));
 
@@ -264,7 +345,7 @@ public class ClientView extends javax.swing.JFrame {
 
         jLabel10.setText("Decription");
 
-        addFloorbtn.setText("Add");
+        applyFloorbtn.setText("Apply");
 
         javax.swing.GroupLayout floorFormLayout = new javax.swing.GroupLayout(floorForm.getContentPane());
         floorForm.getContentPane().setLayout(floorFormLayout);
@@ -272,7 +353,7 @@ public class ClientView extends javax.swing.JFrame {
             floorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(floorFormLayout.createSequentialGroup()
                 .addGap(179, 179, 179)
-                .addComponent(addFloorbtn)
+                .addComponent(applyFloorbtn)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, floorFormLayout.createSequentialGroup()
                 .addContainerGap(70, Short.MAX_VALUE)
@@ -302,11 +383,85 @@ public class ClientView extends javax.swing.JFrame {
                     .addComponent(jLabel10)
                     .addComponent(floorDecrip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                .addComponent(addFloorbtn)
+                .addComponent(applyFloorbtn)
                 .addContainerGap())
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(nameFloorlb, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
+                    .addComponent(decriptionlb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(nameFloorlb)
+                .addGap(72, 72, 72)
+                .addComponent(decriptionlb)
+                .addContainerGap(58, Short.MAX_VALUE))
+        );
+
+        jLabel12.setText("ID");
+
+        floorSearch.setText("Search");
+
+        floorUpdate.setText("Update");
+
+        floorCreate.setText("Create");
+
+        floorDelete.setText("Delete");
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel12)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(floorDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                    .addComponent(floorSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(floorUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
+                    .addComponent(floorCreate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(floorIdtf, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(101, Short.MAX_VALUE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel12)
+                            .addComponent(floorIdtf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(41, 41, 41)
+                        .addComponent(floorSearch)
+                        .addGap(39, 39, 39)
+                        .addComponent(floorUpdate))
+                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addComponent(floorDelete)
+                .addGap(39, 39, 39)
+                .addComponent(floorCreate)
+                .addContainerGap(203, Short.MAX_VALUE))
+        );
+
+        tab.addTab("Floor", jPanel7);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -357,63 +512,70 @@ public class ClientView extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(roomDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
-                    .addComponent(roomId)
                     .addComponent(roomSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(roomUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
-                    .addComponent(roomCreate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                    .addComponent(roomCreate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(roomId, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(35, 35, 35)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(roomId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(45, 45, 45)
-                        .addComponent(roomSearch)
-                        .addGap(48, 48, 48)
-                        .addComponent(roomUpdate)
-                        .addGap(51, 51, 51)
-                        .addComponent(roomDelete)
                         .addGap(46, 46, 46)
+                        .addComponent(roomSearch)
+                        .addGap(51, 51, 51)
+                        .addComponent(roomUpdate)
+                        .addGap(47, 47, 47)
+                        .addComponent(roomDelete)
+                        .addGap(56, 56, 56)
                         .addComponent(roomCreate))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addContainerGap(165, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Room", jPanel1);
+        tab.addTab("Room", jPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(tab)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(tab)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-   
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addFloorbtn;
+    private javax.swing.JButton applyFloorbtn;
     private javax.swing.JButton applyRoomBtn;
     private javax.swing.JLabel areaLb;
+    private javax.swing.JLabel decriptionlb;
+    private javax.swing.JButton floorCreate;
     private javax.swing.JTextField floorDecrip;
+    private javax.swing.JButton floorDelete;
     private javax.swing.JDialog floorForm;
     private javax.swing.JComboBox<Integer> floorId;
+    private javax.swing.JTextField floorIdtf;
     private javax.swing.JLabel floorLb;
     private javax.swing.JTextField floorName;
+    private javax.swing.JButton floorSearch;
+    private javax.swing.JButton floorUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -423,7 +585,9 @@ public class ClientView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JLabel nameFloorlb;
     private javax.swing.JLabel nameLb;
     private javax.swing.JLabel populationLb;
     private javax.swing.JTextField roomArea;
@@ -435,5 +599,6 @@ public class ClientView extends javax.swing.JFrame {
     private javax.swing.JTextField roomPopulation;
     private javax.swing.JButton roomSearch;
     private javax.swing.JButton roomUpdate;
+    private javax.swing.JTabbedPane tab;
     // End of variables declaration//GEN-END:variables
 }

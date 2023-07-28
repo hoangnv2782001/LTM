@@ -22,6 +22,10 @@ public class Floor implements Serializable{
         this.decription = decription;
     }
 
+    public Floor() {
+    }
+    
+
     public int getId() {
         return id;
     }

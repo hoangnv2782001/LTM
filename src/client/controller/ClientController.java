@@ -36,6 +36,8 @@ public class ClientController {
     private ClientView clientView;
 
     private Room room;
+    
+    private Floor floor;
 
     private List<Floor> floors;
 
@@ -153,8 +155,8 @@ public class ClientController {
                     String message = (String) receiveData();
 
                     clientView.showMessage(message);
-                    
-                    if(action == Action.UPDATE_ROOM){
+
+                    if (action == Action.UPDATE_ROOM) {
                         clientView.showRoomInfo(room);
                     }
 
@@ -196,7 +198,99 @@ public class ClientController {
 
                     if (room != null) {
                         clientView.showRoomInfo(room);
-                      
+
+                    } else {
+                        clientView.showMessage("ID không tồn tại!!!");
+                    }
+                } catch (NumberFormatException ex) {
+                    clientView.showMessage("Hãy nhập đúng định dạng là số nguyên!!!");
+                } catch (EmptyStringException ex) {
+                    clientView.showMessage(ex.getMessage());
+                }
+
+            } else if (e.getSource() == clientView.getFloorCreate()) {
+                setActionRoom(Action.CREATE_ROOM);
+                
+
+            } else if (e.getSource() == clientView.getFloorUpdate()) {
+
+                try {
+                    int id = clientView.getFloorId();
+
+                    Request request = new Request(Action.SEARCH_FLOOR, id);
+
+                    sendData(request);
+
+                    Floor floor = (Floor) receiveData();
+
+                    if (floor != null) {
+                        clientView.setFloorForm(floor);
+                        setActionFloor(Action.UPDATE_FLOOR);
+                    } else {
+                        clientView.showMessage("ID không tồn tại!!!");
+                    }
+                } catch (NumberFormatException ex) {
+                    clientView.showMessage("Hãy nhập đúng định dạng là số nguyên!!!");
+                } catch (EmptyStringException ex) {
+                    clientView.showMessage(ex.getMessage());
+                }
+
+            } else if (e.getSource() == clientView.getApplyFloorbtn()) {
+                clientView.getFloorForm().dispose();
+                try {
+                    floor = clientView.getFloor();
+
+                    Request request = new Request(action, room);
+
+                    sendData(request);
+
+                    String message = (String) receiveData();
+
+                    clientView.showMessage(message);
+
+                    if (action == Action.UPDATE_FLOOR) {
+                        clientView.showFloorInfo(floor);
+                    }
+
+                } catch (NumberFormatException ex) {
+                    clientView.showMessage("Hãy nhập đúng định dạng các trường!!!");
+                } catch (EmptyStringException ex) {
+                    clientView.showMessage(ex.getMessage());
+                }
+
+            } else if (e.getSource() == clientView.getFloorDelete()) {
+
+                try {
+                    int id = clientView.getFloorId();
+
+                    Request request = new Request(Action.DELETE_ROOM, id);
+
+                    sendData(request);
+
+                    String message = (String) receiveData();
+
+                    clientView.showMessage(message);
+                    clientView.clearFloorInfo();
+                } catch (NumberFormatException ex) {
+                    clientView.showMessage("Hãy nhập đúng định dạng là số nguyên!!!");
+                } catch (EmptyStringException ex) {
+                    clientView.showMessage(ex.getMessage());
+                }
+
+            } else if (e.getSource() == clientView.getFloorSearch()) {
+
+                try {
+                    int id = clientView.getFloorId();
+
+                    Request request = new Request(Action.SEARCH_FLOOR, id);
+
+                    sendData(request);
+
+                    Floor floor = (Floor) receiveData();
+
+                    if (floor != null) {
+                        clientView.showFloorInfo(floor);
+
                     } else {
                         clientView.showMessage("ID không tồn tại!!!");
                     }
@@ -212,6 +306,11 @@ public class ClientController {
 
         private void setActionRoom(Action action) {
             clientView.getRoomForm().setVisible(true);
+            this.action = action;
+        }
+
+        private void setActionFloor(Action action) {
+            clientView.getFloorForm().setVisible(true);
             this.action = action;
         }
 
