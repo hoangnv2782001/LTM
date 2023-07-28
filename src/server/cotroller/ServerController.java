@@ -65,6 +65,8 @@ public class ServerController {
 
                 switch (request.getAction()) {
                     case SEARCH_FLOOR:
+                        Floor floor = floorDao.getFloor((int)request.getObject());
+                        sendData(floor);
                         break;
                     case CREATE_FLOOR:
                         this.floorDao.save((Floor) request.getObject());

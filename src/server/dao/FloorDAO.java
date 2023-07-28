@@ -68,6 +68,22 @@ public class FloorDAO extends DAO {
         return floors;
     }
     
+     public Floor getFloor(int id) throws SQLException {
+        String sql = "SELECT * FROM FLOOR WHERE ID = ?";
+
+        PreparedStatement p = connection.prepareStatement(sql);
+        p.setInt(1, id);
+
+        ResultSet rs = p.executeQuery();
+
+        Floor floor = null;
+
+        while (rs.next()) {
+            floor = new Floor(rs.getInt(1), rs.getString(2),rs.getString(3));
+        }
+        return floor;
+    }
+    
 
 
 }
