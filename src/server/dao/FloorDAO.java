@@ -48,6 +48,7 @@ public class FloorDAO extends DAO {
         PreparedStatement p = connection.prepareStatement(sql);
         p.setNString(1, floor.getName());
         p.setString(2, floor.getDecription());
+        p.setInt(3, floor.getId());
         p.executeUpdate();
 
     }

@@ -61,7 +61,7 @@ public class ServerController {
             try {
                 request = receiveData();
                 
-                System.out.println(request.getAction());
+              
 
                 switch (request.getAction()) {
                     case SEARCH_FLOOR:

@@ -34,9 +34,13 @@ public class ClientView extends javax.swing.JFrame {
         setResizable(false);
         roomForm.setLocationRelativeTo(this);
         roomForm.setResizable(false);
+        floorForm.setLocationRelativeTo(this);
+        floorForm.setResizable(false);
 
         room = new Room();
         floor = new Floor();
+        
+        
     }
 
     public void addActionListener(ActionListener actionListener) {
@@ -89,10 +93,11 @@ public class ClientView extends javax.swing.JFrame {
         }
         String name = floorName.getText();
 
-        String decription = roomPopulation.getText().toString();
+        String decription = floorDecrip.getText().toString();
 
         floor.setName(name);
         floor.setDecription(decription);
+        floor.setId(Integer.parseInt(floorIdtf.getText().toString()));
 
         return floor;
     }
@@ -148,7 +153,7 @@ public class ClientView extends javax.swing.JFrame {
     }
 
     public void showFloorInfo(Floor floor) {
-        nameFloorlb.setText("Name : " + room.getFloorId());
+        nameFloorlb.setText("Name : " + floor.getName());
         decriptionlb.setText("Decription : " + floor.getDecription());
 
     }
@@ -336,6 +341,8 @@ public class ClientView extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        floorForm.setSize(new java.awt.Dimension(444, 318));
+
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("FLOOR FORM");
@@ -356,7 +363,7 @@ public class ClientView extends javax.swing.JFrame {
                 .addComponent(applyFloorbtn)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, floorFormLayout.createSequentialGroup()
-                .addContainerGap(70, Short.MAX_VALUE)
+                .addContainerGap(62, Short.MAX_VALUE)
                 .addGroup(floorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(floorFormLayout.createSequentialGroup()
@@ -382,7 +389,7 @@ public class ClientView extends javax.swing.JFrame {
                 .addGroup(floorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(floorDecrip, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
                 .addComponent(applyFloorbtn)
                 .addContainerGap())
         );
@@ -409,7 +416,7 @@ public class ClientView extends javax.swing.JFrame {
                 .addComponent(nameFloorlb)
                 .addGap(72, 72, 72)
                 .addComponent(decriptionlb)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
 
         jLabel12.setText("ID");
@@ -451,14 +458,14 @@ public class ClientView extends javax.swing.JFrame {
                             .addComponent(floorIdtf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(41, 41, 41)
                         .addComponent(floorSearch)
-                        .addGap(39, 39, 39)
-                        .addComponent(floorUpdate))
+                        .addGap(38, 38, 38)
+                        .addComponent(floorUpdate)
+                        .addGap(33, 33, 33)
+                        .addComponent(floorDelete)
+                        .addGap(37, 37, 37)
+                        .addComponent(floorCreate))
                     .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addComponent(floorDelete)
-                .addGap(39, 39, 39)
-                .addComponent(floorCreate)
-                .addContainerGap(203, Short.MAX_VALUE))
+                .addContainerGap(276, Short.MAX_VALUE))
         );
 
         tab.addTab("Floor", jPanel7);
@@ -538,7 +545,7 @@ public class ClientView extends javax.swing.JFrame {
                         .addGap(56, 56, 56)
                         .addComponent(roomCreate))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(165, Short.MAX_VALUE))
+                .addContainerGap(225, Short.MAX_VALUE))
         );
 
         tab.addTab("Room", jPanel1);

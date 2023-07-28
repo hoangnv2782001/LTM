@@ -111,6 +111,7 @@ public class ClientController {
 
         private Action action;
         private int roomID;
+        private int floorID;
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -209,7 +210,7 @@ public class ClientController {
                 }
 
             } else if (e.getSource() == clientView.getFloorCreate()) {
-                setActionRoom(Action.CREATE_ROOM);
+                setActionFloor(Action.CREATE_FLOOR);
                 
 
             } else if (e.getSource() == clientView.getFloorUpdate()) {
@@ -240,7 +241,7 @@ public class ClientController {
                 try {
                     floor = clientView.getFloor();
 
-                    Request request = new Request(action, room);
+                    Request request = new Request(action, floor);
 
                     sendData(request);
 
@@ -263,7 +264,7 @@ public class ClientController {
                 try {
                     int id = clientView.getFloorId();
 
-                    Request request = new Request(Action.DELETE_ROOM, id);
+                    Request request = new Request(Action.DELETE_FLOOR, id);
 
                     sendData(request);
 
