@@ -81,8 +81,7 @@ public class ClientView extends javax.swing.JFrame {
         room.setFloorId(floor);
         room.setArea(area);
         room.setPopulationOfRoom(population);
-        room.setId(Integer.parseInt(roomId.getText().toString()));
-
+       
         return room;
     }
 
@@ -97,8 +96,7 @@ public class ClientView extends javax.swing.JFrame {
 
         floor.setName(name);
         floor.setDecription(decription);
-        floor.setId(Integer.parseInt(floorIdtf.getText().toString()));
-
+       
         return floor;
     }
 
