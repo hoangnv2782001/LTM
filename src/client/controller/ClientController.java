@@ -146,7 +146,7 @@ public class ClientController {
                     Room room = clientView.getRoom();
                     
                     if (action == Action.UPDATE_ROOM) {
-                        room.setId(ClientController.this.floor.getId());
+                        room.setId(ClientController.this.room.getId());
                     }
                     
                     Request request = new Request(action, room);
