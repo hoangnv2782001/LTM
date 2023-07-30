@@ -52,7 +52,7 @@ public class ClientController {
         this.clientView = clientView;
         this.clientView.setVisible(true);
         this.clientView.addActionListener(new Listener());
-        this.clientView.addItems(getFloorsId());
+        setFloorID();
         
     }
     
@@ -96,7 +96,7 @@ public class ClientController {
         return object;
     }
     
-    private List<Integer> getFloorsId() {
+    private void setFloorID() {
         List<Floor> floors = new ArrayList<>();
         Request request = new Request(Action.GETALL_FLOOR, null);
         sendData(request);
@@ -104,7 +104,7 @@ public class ClientController {
         floors = (List<Floor>) receiveData();
         List<Integer> listId = floors.stream().map(Floor::getId).collect(Collectors.toList());
         
-        return listId;
+        this.clientView.addItems(listId);
     }
     
     class Listener implements ActionListener {
@@ -255,6 +255,8 @@ public class ClientController {
                     if (action == Action.UPDATE_FLOOR) {
                         clientView.showFloorInfo(floor);
                     }
+                    
+                    setFloorID();
                     
                 } catch (NumberFormatException ex) {
                     clientView.showMessage("Hãy nhập đúng định dạng các trường!!!");

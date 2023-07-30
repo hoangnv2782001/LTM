@@ -60,6 +60,7 @@ public class ClientView extends javax.swing.JFrame {
     }
 
     public void addItems(List<Integer> floors) {
+        floorId.removeAllItems();
         for (Integer i : floors) {
             floorId.addItem(i);
         }
